@@ -1,4 +1,5 @@
 import * as React from 'react'
+import ReactDOM from 'react-dom'
 
 import FieldGroup from './FieldGroup'
 import InputField from './InputField'
@@ -30,3 +31,5 @@ export class Example extends React.Component<{}> {
     )
   }
 }
+
+ReactDOM.render(<Example />, document.getElementsByTagName('body')[0])

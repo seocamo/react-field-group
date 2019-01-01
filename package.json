@@ -6,11 +6,19 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "postinstall": "npm run build",
-    "build": "tsc -d",
+    "prebuild": "npm run lint",
+    "build": "webpack -p --config ./webpack.config.production.js",
+    "start": "node server.js",
     "dev": "node --max_old_space_size=4092 ./node_modules/.bin/webpack-dev-server --config webpack.config.js",
+    "clean": "rimraf dist && mkdir dist",
+    "prepublish": "npm run clean && npm run build",
     "lint": "tslint -c tslint.json 'src/**/*.ts?(x)' --fix -p tsconfig.json",
     "format": "prettier -l --write 'src/**/*.tsx'"
   },
+  "pre-push": [
+    "lint",
+    "format"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/seocamo/react-field-group.git"
@@ -22,19 +30,26 @@
   },
   "homepage": "https://github.com/seocamo/react-field-group#readme",
   "dependencies": {
+    "pre-push": "^0.1.1",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
+    "awesome-typescript-loader": "^5.2.1",
+    "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.15.3",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0",
     "tslint-eslint-rules": "^5.4.0",
+    "tslint-loader": "^3.5.4",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.2.2",
-    "webpack": "^4.28.2",
-    "webpack-cli": "^3.1.2"
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
   }
 }
